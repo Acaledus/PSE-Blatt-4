@@ -1,15 +1,17 @@
 package de.unistuttgart.iaas.pse.ex04.p3;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class PostBox {
+	private ArrayList<Letter> briefkasten;
 
 	/**
 	 * constructor for the PostBox
 	 */
 	public PostBox() {
-
+		briefkasten = new ArrayList<Letter>();
 	}
 
 	/**
@@ -19,7 +21,8 @@ public class PostBox {
 	 *            the letters to add
 	 */
 	public void addLetters(Letter... letters) {
-
+		for(Letter l : letters)
+			briefkasten.add(l);
 	}
 
 	/**
@@ -27,25 +30,27 @@ public class PostBox {
 	 * post box to the console
 	 */
 	public void printAll() {
-
+		for(Letter l : briefkasten)
+			System.out.println("Absender: " + l.getSender() + "\t\tEmpfänger: " + l.getRecipient());
 	}
 
 	/**
-	 * empties the PostBox into the given PostBag, i.e. all letters are moved
-	 * from the PostBox to the PostBag
-	 * 
-	 * @param postbag
-	 *            all letters of the postbox will be moved to this postbag
+	 * Empties the PostBox into the given PostBag, i.e. all letters are moved
+	 * from the PostBox to the PostBag.
+	 * @param postbag - all letters of the postbox will be moved to this postbag.
 	 */
 	public void emptyToPostBag(PostBag postBag) {
-
+		for(Letter l : briefkasten) {
+			postBag.addLetter(l);
+		}
+		briefkasten.clear();
 	}
 
 	/**
 	 * saves all letters in a file
 	 */
 	public void saveLettersToFile() {
-
+		
 	}
 
 	/**

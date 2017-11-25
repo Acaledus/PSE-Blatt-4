@@ -3,7 +3,6 @@ package de.unistuttgart.iaas.pse.ex04.p3;
 import java.io.Serializable;
 
 public class Letter implements Serializable {
-
 	private String sender;
 	private String recipient; 
 
