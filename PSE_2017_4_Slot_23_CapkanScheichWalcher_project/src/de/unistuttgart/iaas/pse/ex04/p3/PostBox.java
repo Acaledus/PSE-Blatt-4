@@ -1,9 +1,15 @@
 package de.unistuttgart.iaas.pse.ex04.p3;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Ein Briefkasten mit vielen Funktionen.
+ * @author Daniel Capkan, Matrikelnummer: 3325960, st156303@stud.uni-stuttgart.de
+ * @author Mario Scheich, Matrikelnummer: 3232655 , st151491@stud.uni-stuttgart.de
+ * @author Florian Walcher, Matrikelnummer: 3320185, st156818@stud.uni-stuttgart.de
+ */
 public class PostBox {
 	private ArrayList<Letter> briefkasten;
 
@@ -49,15 +55,35 @@ public class PostBox {
 	/**
 	 * saves all letters in a file
 	 */
-	public void saveLettersToFile() {
+	public void saveLettersToFile() throws IOException {
+		ObjectOutputStream os = null;
+		try {
+			os = new ObjectOutputStream(new FileOutputStream("briefkasten.bin"));
+			for(Letter l : briefkasten) {
+				os.writeObject(l);
+			}
+		} finally {
+			if(os != null) os.close();
+		}
 		
 	}
 
 	/**
 	 * reads letters from a file and adds them to the PostBox
 	 */
-	public void loadLettersFromFile() {
-
+	public void loadLettersFromFile() throws IOException {
+		ObjectInputStream is = null;
+		try {
+			is = new ObjectInputStream(new FileInputStream("briefkasten.bin"));
+			while(is.available() > 1) {
+				Letter l = (Letter) is.readObject(); //das hier tut irgendwie nicht
+				briefkasten.add(l);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if(is != null) is.close();
+		}
 	}
 
 	public static void mainMenu() {
@@ -97,10 +123,18 @@ public class PostBox {
 				postBox.addLetters(new Letter(letterFrom, letterTo));
 				break;
 			case 2:
-				postBox.saveLettersToFile();
+				try {
+					postBox.saveLettersToFile();
+				} catch (IOException e){
+					System.err.println(e);
+				}
 				break;
 			case 3:
-				postBox.loadLettersFromFile();
+				try {
+					postBox.loadLettersFromFile();
+				} catch (IOException e) {
+					System.err.println(e);
+				}
 				break;
 			case 4:
 				postBox.printAll();
