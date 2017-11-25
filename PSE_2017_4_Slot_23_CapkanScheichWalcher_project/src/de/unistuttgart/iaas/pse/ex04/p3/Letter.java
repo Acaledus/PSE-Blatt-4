@@ -4,34 +4,33 @@ import java.io.Serializable;
 
 public class Letter implements Serializable {
 
+	private String sender;
+	private String recipient; 
+
 	/**
-	 * creates a new letter
-	 * 
-	 * @param sender
-	 *            the sender of the letter
-	 * @param recipient
-	 *            the recipient of the letter
+	 * Creates a new letter.
+	 * @param sender - the sender of the letter.
+	 * @param recipient - the recipient of the letter.
 	 */
 	public Letter(String sender, String recipient) {
-
+		this.sender = sender;
+		this.recipient = recipient;
 	}
 
 	/**
-	 * returns the sender of the letter
-	 * 
-	 * @return the sender of the letter
+	 * Returns the sender of the letter.
+	 * @return - the sender of the letter.
 	 */
 	public String getSender() {
-		return null;
+		return sender;
 	}
 
 	/**
-	 * returns the recipient of the letter
-	 * 
-	 * @return the recipient of the letter
+	 * Returns the recipient of the letter.
+	 * @return - the recipient of the letter.
 	 */
 	public String getRecipient() {
-		return null;
+		return recipient;
 	}
 
 }
