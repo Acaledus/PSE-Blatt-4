@@ -37,7 +37,7 @@ public class PostBox {
 	 */
 	public void printAll() {
 		for(Letter l : briefkasten)
-			System.out.println("Absender: " + l.getSender() + "\t\tEmpf�nger: " + l.getRecipient());
+			System.out.println("Absender: " + l.getSender() + "\t\tEmpfänger: " + l.getRecipient());
 	}
 
 	/**
@@ -60,6 +60,7 @@ public class PostBox {
 		try {
 			os = new ObjectOutputStream(new FileOutputStream("briefkasten.bin"));
 			for(Letter l : briefkasten) {
+				System.out.println(l);
 				os.writeObject(l);
 			}
 		} finally {
@@ -75,8 +76,9 @@ public class PostBox {
 		ObjectInputStream is = null;
 		try {
 			is = new ObjectInputStream(new FileInputStream("briefkasten.bin"));
-			while(is.available() > 1) {
-				Letter l = (Letter) is.readObject(); //das hier tut irgendwie nicht
+			while(true) { //Das funktioniert einigermaßen ¯\_(ツ)_/¯
+				Letter l = (Letter) is.readObject();
+				System.out.println(l);
 				briefkasten.add(l);
 			}
 		} catch (ClassNotFoundException e) {
