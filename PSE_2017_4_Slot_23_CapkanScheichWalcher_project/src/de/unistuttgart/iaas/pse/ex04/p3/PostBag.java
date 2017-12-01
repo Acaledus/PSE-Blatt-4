@@ -15,7 +15,7 @@ public class PostBag {
 	 * Returns all letters contained in the postbag.
 	 * @return all letters contained in the postbag.
 	 */
-	public ArrayList<Letter> getLetters() {
+	public ArrayList<Letter> getLetters(Postbag sample) {
 		return postsack;
 	}
 
@@ -24,8 +24,8 @@ public class PostBag {
 	 * @param letters - the letters to add.
 	 */
 	public void addLetter(Letter... letters) {
-		for(Letter l : letters)
-			postsack.add(l);
+		for(int i = 0; i < letters.length; i++)
+			postsack.add(letters[i]);
 	}
 	
 }
