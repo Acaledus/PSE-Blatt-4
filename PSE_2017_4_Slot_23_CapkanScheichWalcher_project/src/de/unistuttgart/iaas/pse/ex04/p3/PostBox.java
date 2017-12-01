@@ -27,8 +27,8 @@ public class PostBox {
 	 *            the letters to add
 	 */
 	public void addLetters(Letter... letters) {
-		for(Letter l : letters)
-			briefkasten.add(l);
+		for(int i = 0; i < letters.length; i++)
+			briefkasten.add(letters[i]);
 	}
 
 	/**
@@ -36,8 +36,8 @@ public class PostBox {
 	 * post box to the console
 	 */
 	public void printAll() {
-		for(Letter l : briefkasten)
-			System.out.println("Absender: " + l.getSender() + "\t\tEmpfänger: " + l.getRecipient());
+		for(int i = 0; i < box.size(); i++)
+			System.out.println("Absender: " + briefkasten.get(i).getSender() + "\t\tEmpfänger: " + briefkasten.get(i).getRecipient());
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class PostBox {
 	 * @param postbag - all letters of the postbox will be moved to this postbag.
 	 */
 	public void emptyToPostBag(PostBag postBag) {
-		for(Letter l : briefkasten) {
-			postBag.addLetter(l);
+		for(int i = 0; i < briefkasten.size(); i++) {
+			postBag.addLetter(briefkasten.get(i));
 		}
 		briefkasten.clear();
 	}
@@ -56,35 +56,28 @@ public class PostBox {
 	 * saves all letters in a file
 	 */
 	public void saveLettersToFile() throws IOException {
-		ObjectOutputStream os = null;
 		try {
-			os = new ObjectOutputStream(new FileOutputStream("briefkasten.bin"));
-			for(Letter l : briefkasten) {
-				System.out.println(l);
-				os.writeObject(l);
-			}
-		} finally {
-			if(os != null) os.close();
+			FileOutputStream fos = new FileOutputStream("letters.dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(box);
+			oos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
 	}
+
 
 	/**
 	 * reads letters from a file and adds them to the PostBox
 	 */
 	public void loadLettersFromFile() throws IOException {
-		ObjectInputStream is = null;
 		try {
-			is = new ObjectInputStream(new FileInputStream("briefkasten.bin"));
-			while(true) { //Das funktioniert einigermaßen ¯\_(ツ)_/¯
-				Letter l = (Letter) is.readObject();
-				System.out.println(l);
-				briefkasten.add(l);
-			}
-		} catch (ClassNotFoundException e) {
+			FileInputStream fin = new FileInputStream("letters.dat");
+			ObjectInputStream ois = new ObjectInputStream(fin);
+			box = (ArrayList<Letter>) ois.readObject();
+			ois.close();
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if(is != null) is.close();
 		}
 	}
 
